@@ -1,0 +1,33 @@
+implements Interface
+interface school
+{
+    void showschoolname();
+}
+interface dept extends school
+{
+    void showdeptname();
+}
+
+class student implements dept
+{
+    public void showschoolname()
+    {
+        System.out.println("SEOT");
+    }
+    public void showdeptname()
+    {
+        System.out.println("CSE");
+    }
+   public void show()
+    {
+        showschoolname();
+        showdeptname();
+    }
+}
+class interface_2 {
+    public static void main(String args[])
+    {
+        student s = new student();
+        s.show();
+    }
+}
