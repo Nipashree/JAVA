@@ -1,0 +1,143 @@
+import java.util.Scanner;
+
+public class MatrixOperations {
+    
+    // Function to read matrix
+    public static int[][] readMatrix(Scanner sc, int rows, int cols) {
+        int[][] matrix = new int[rows][cols];
+        System.out.println("Enter elements of matrix (" + rows + "x" + cols + "):");
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                matrix[i][j] = sc.nextInt();
+            }
+        }
+        return matrix;
+    }
+
+    // Function to print matrix
+    public static void printMatrix(int[][] matrix) {
+        for (int[] row : matrix) {
+            for (int elem : row) {
+                System.out.print(elem + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    // Function to add two matrices
+    public static int[][] addMatrices(int[][] A, int[][] B, int rows, int cols) {
+        int[][] result = new int[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result[i][j] = A[i][j] + B[i][j];
+            }
+        }
+        return result;
+    }
+
+    // Function to subtract two matrices
+    public static int[][] subtractMatrices(int[][] A, int[][] B, int rows, int cols) {
+        int[][] result = new int[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result[i][j] = A[i][j] - B[i][j];
+            }
+        }
+        return result;
+    }
+
+    // Function to find transpose of a matrix
+    public static int[][] transposeMatrix(int[][] A, int rows, int cols) {
+        int[][] result = new int[cols][rows]; // Swapping rows and columns
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result[j][i] = A[i][j];
+            }
+        }
+        return result;
+    }
+
+    // Function to multiply two matrices
+    public static int[][] multiplyMatrices(int[][] A, int[][] B, int rowsA, int colsA, int colsB) {
+        int[][] result = new int[rowsA][colsB];
+        for (int i = 0; i < rowsA; i++) {
+            for (int j = 0; j < colsB; j++) {
+                for (int k = 0; k < colsA; k++) {
+                    result[i][j] += A[i][k] * B[k][j];
+                }
+            }
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        if (args.length == 0) {
+            System.out.println("Please provide an operation choice: 1-Addition, 2-Subtraction, 3-Transpose, 4-Multiplication");
+            return;
+        }
+
+        int choice = Integer.parseInt(args[0]);
+
+        switch (choice) {
+            case 1: // Matrix Addition
+                System.out.print("Enter number of rows and columns: ");
+                int rows = sc.nextInt();
+                int cols = sc.nextInt();
+                int[][] A = readMatrix(sc, rows, cols);
+                int[][] B = readMatrix(sc, rows, cols);
+                int[][] sum = addMatrices(A, B, rows, cols);
+                System.out.println("Result of Addition:");
+                printMatrix(sum);
+                break;
+
+            case 2: // Matrix Subtraction
+                System.out.print("Enter number of rows and columns: ");
+                rows = sc.nextInt();
+                cols = sc.nextInt();
+                A = readMatrix(sc, rows, cols);
+                B = readMatrix(sc, rows, cols);
+                int[][] diff = subtractMatrices(A, B, rows, cols);
+                System.out.println("Result of Subtraction:");
+                printMatrix(diff);
+                break;
+
+            case 3: // Matrix Transpose
+                System.out.print("Enter number of rows and columns: ");
+                rows = sc.nextInt();
+                cols = sc.nextInt();
+                A = readMatrix(sc, rows, cols);
+                int[][] transposed = transposeMatrix(A, rows, cols);
+                System.out.println("Transpose of the matrix:");
+                printMatrix(transposed);
+                break;
+
+            case 4: // Matrix Multiplication
+                System.out.print("Enter rows and columns of first matrix: ");
+                int rowsA = sc.nextInt();
+                int colsA = sc.nextInt();
+                A = readMatrix(sc, rowsA, colsA);
+
+                System.out.print("Enter rows and columns of second matrix: ");
+                int rowsB = sc.nextInt();
+                int colsB = sc.nextInt();
+                
+                if (colsA != rowsB) {
+                    System.out.println("Matrix multiplication not possible. Columns of first matrix must match rows of second matrix.");
+                    return;
+                }
+
+                B = readMatrix(sc, rowsB, colsB);
+                int[][] product = multiplyMatrices(A, B, rowsA, colsA, colsB);
+                System.out.println("Result of Multiplication:");
+                printMatrix(product);
+                break;
+
+            default:
+                System.out.println("Invalid choice! Please select 1, 2, 3, or 4.");
+        }
+
+        sc.close();
+    }
+}
