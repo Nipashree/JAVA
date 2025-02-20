@@ -1,0 +1,114 @@
+import java.util.Scanner;
+
+public class MatrixOperations {
+    // Method to add matrices
+    public static int[][] addMatrices(int[][] A, int[][] B, int rows, int cols) {
+        int[][] result = new int[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result[i][j] = A[i][j] + B[i][j];
+            }
+        }
+        return result;
+    }
+
+    // Method to subtract matrices
+    public static int[][] subtractMatrices(int[][] A, int[][] B, int rows, int cols) {
+        int[][] result = new int[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result[i][j] = A[i][j] - B[i][j];
+            }
+        }
+        return result;
+    }
+
+    // Method to multiply matrices
+    public static int[][] multiplyMatrices(int[][] A, int[][] B, int rowsA, int colsA, int colsB) {
+        int[][] result = new int[rowsA][colsB];
+        for (int i = 0; i < rowsA; i++) {
+            for (int j = 0; j < colsB; j++) {
+                for (int k = 0; k < colsA; k++) {
+                    result[i][j] += A[i][k] * B[k][j];
+                }
+            }
+        }
+        return result;
+    }
+
+    // Method to transpose a matrix
+    public static int[][] transposeMatrix(int[][] A, int rows, int cols) {
+        int[][] result = new int[cols][rows];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result[j][i] = A[i][j];
+            }
+        }
+        return result;
+    }
+
+    // Method to display a matrix
+    public static void displayMatrix(int[][] matrix, int rows, int cols) {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter number of rows: ");
+        int rows = scanner.nextInt();
+        System.out.print("Enter number of columns: ");
+        int cols = scanner.nextInt();
+
+        int[][] A = new int[rows][cols];
+        int[][] B = new int[rows][cols];
+
+        System.out.println("Enter elements of first matrix:");
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                A[i][j] = scanner.nextInt();
+            }
+        }
+
+        System.out.println("Enter elements of second matrix:");
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                B[i][j] = scanner.nextInt();
+            }
+        }
+
+        System.out.println("Choose an operation:\n1. Addition\n2. Subtraction\n3. Multiplication\n4. Transpose (of first matrix)");
+        int choice = scanner.nextInt();
+
+        switch (choice) {
+            case 1:
+                System.out.println("Matrix Addition Result:");
+                displayMatrix(addMatrices(A, B, rows, cols), rows, cols);
+                break;
+            case 2:
+                System.out.println("Matrix Subtraction Result:");
+                displayMatrix(subtractMatrices(A, B, rows, cols), rows, cols);
+                break;
+            case 3:
+                System.out.println("Matrix Multiplication Result:");
+                if (rows == cols) {
+                    displayMatrix(multiplyMatrices(A, B, rows, cols, cols), rows, cols);
+                } else {
+                    System.out.println("Matrix multiplication is not possible with given dimensions.");
+                }
+                break;
+            case 4:
+                System.out.println("Transpose of First Matrix:");
+                displayMatrix(transposeMatrix(A, rows, cols), cols, rows);
+                break;
+            default:
+                System.out.println("Invalid choice.");
+        }
+
+        scanner.close();
+    }
+}
