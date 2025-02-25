@@ -1,0 +1,14 @@
+class thread_2 implements Runnable
+{
+    public static void main (String [] args)
+    {
+        thread_2 t1 = new thread_2();
+        Thread t2 = new Thread (t1);
+        t2.start();
+        System.out.println ("Outside thread");
+    }
+    public void run ()
+    {
+        System.out.println ("Within thread");
+    }
+}
