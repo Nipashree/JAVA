@@ -1,0 +1,14 @@
+class thread_1 extends Thread
+{
+    public static void main (String [] args)
+    {
+        thread_1 t1 = new thread_1();
+        t1.start();
+        System.out.println ("Outside Thread");
+    }
+    public void run ()
+    {
+        System.out.println ("Within Thread");
+    }
+}
+
