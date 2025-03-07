@@ -1,0 +1,149 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Student {
+    private int id;
+    private String name;
+    private double totalFees;
+    private double paidFees;
+
+    public Student(int id, String name, double totalFees) {
+        this.id = id;
+        this.name = name;
+        this.totalFees = totalFees;
+        this.paidFees = 0; // Initially, no fees paid
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getTotalFees() {
+        return totalFees;
+    }
+
+    public double getPaidFees() {
+        return paidFees;
+    }
+
+    public double getPendingFees() {
+        return totalFees - paidFees;
+    }
+
+    public void payFees(double amount) {
+        if (amount > 0 && (paidFees + amount) <= totalFees) {
+            paidFees += amount;
+            System.out.println("₹" + amount + " paid successfully.");
+        } else {
+            System.out.println("Invalid amount. Payment failed.");
+        }
+    }
+
+    public void displayDetails() {
+        System.out.println("ID: " + id);
+        System.out.println("Name: " + name);
+        System.out.println("Total Fees: ₹" + totalFees);
+        System.out.println("Paid Fees: ₹" + paidFees);
+        System.out.println("Pending Fees: ₹" + getPendingFees());
+    }
+}
+
+public class StudentFeesPaymentSystem {
+    private static ArrayList<Student> students = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        int choice;
+        do {
+            System.out.println("\n--- Student Fees Payment System ---");
+            System.out.println("1. Add Student");
+            System.out.println("2. Pay Fees");
+            System.out.println("3. Display Student Details");
+            System.out.println("4. Check Pending Fees");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    addStudent();
+                    break;
+                case 2:
+                    payFees();
+                    break;
+                case 3:
+                    displayStudent();
+                    break;
+                case 4:
+                    checkPendingFees();
+                    break;
+                case 5:
+                    System.out.println("Exiting program...");
+                    break;
+                default:
+                    System.out.println("Invalid choice! Please try again.");
+            }
+        } while (choice != 5);
+    }
+
+    private static void addStudent() {
+        System.out.print("Enter Student ID: ");
+        int id = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+        System.out.print("Enter Student Name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter Total Fees: ");
+        double totalFees = scanner.nextDouble();
+
+        students.add(new Student(id, name, totalFees));
+        System.out.println("Student added successfully!");
+    }
+
+    private static void payFees() {
+        System.out.print("Enter Student ID: ");
+        int id = scanner.nextInt();
+        Student student = findStudentById(id);
+        if (student != null) {
+            System.out.print("Enter amount to pay: ");
+            double amount = scanner.nextDouble();
+            student.payFees(amount);
+        } else {
+            System.out.println("Student not found!");
+        }
+    }
+
+    private static void displayStudent() {
+        System.out.print("Enter Student ID: ");
+        int id = scanner.nextInt();
+        Student student = findStudentById(id);
+        if (student != null) {
+            student.displayDetails();
+        } else {
+            System.out.println("Student not found!");
+        }
+    }
+
+    private static void checkPendingFees() {
+        System.out.print("Enter Student ID: ");
+        int id = scanner.nextInt();
+        Student student = findStudentById(id);
+        if (student != null) {
+            System.out.println("Pending Fees for " + student.getName() + ": ₹" + student.getPendingFees());
+        } else {
+            System.out.println("Student not found!");
+        }
+    }
+
+    private static Student findStudentById(int id) {
+        for (Student student : students) {
+            if (student.getId() == id) {
+                return student;
+            }
+        }
+        return null;
+    }
+}
