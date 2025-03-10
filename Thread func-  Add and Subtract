@@ -1,0 +1,54 @@
+class Calculator {
+    private int a, b;
+
+    public Calculator(int a, int b) {
+        this.a = a;
+        this.b = b;
+    }
+
+    public synchronized void add() {
+        int result = a + b;
+        System.out.println(Thread.currentThread().getName() + " - Addition Result: " + result);
+    }
+
+    public synchronized void subtract() {
+        int result = a - b;
+        System.out.println(Thread.currentThread().getName() + " - Subtraction Result: " + result);
+    }
+}
+
+class AdditionThread extends Thread {
+    private Calculator calculator;
+
+    public AdditionThread(Calculator calculator) {
+        this.calculator = calculator;
+    }
+
+    public void run() {
+        calculator.add();
+    }
+}
+
+class SubtractionThread extends Thread {
+    private Calculator calculator;
+
+    public SubtractionThread(Calculator calculator) {
+        this.calculator = calculator;
+    }
+
+    public void run() {
+        calculator.subtract();
+    }
+}
+
+public class ThreadExample {
+    public static void main(String[] args) {
+        Calculator calculator = new Calculator(10, 5); // Example values
+
+        AdditionThread addThread = new AdditionThread(calculator);
+        SubtractionThread subThread = new SubtractionThread(calculator);
+
+        addThread.start();
+        subThread.start();
+    }
+}
