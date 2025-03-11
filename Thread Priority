@@ -1,0 +1,28 @@
+// Java Thread Priority: NORM_PRIORITY : 5, MIN_PRIORITY : 1, //MAX_PRIORITY : 10 : Range - 1 to 10
+class Thread1 extends Thread
+{
+    public void run()
+    {
+        System.out.println("Priority of "+ Thread.currentThread().getName() + " is "
+        + Thread.currentThread().getPriority());
+    }
+    public static void main(String[] args)
+    {
+        Thread1 t1 = new Thread1();
+        Thread1 t2 = new Thread1();
+        Thread1 t3 = new Thread1();
+        System.out.println("Default Priority of T1: " + t1.getPriority());
+        System.out.println("Default Priority of T2: " + t2.getPriority());
+        System.out.println("Default Priority of T3: " + t3.getPriority());
+        // changing of thread priorities
+        t1.setPriority(7);
+        t2.setPriority(3);
+        t3.setPriority(9);
+        System.out.println("After Change : Priority of T1: " + t1.getPriority());
+        System.out.println("After Change : Priority of T2: " + t2.getPriority());
+        System.out.println("After Change : Priority of T3: " + t3.getPriority());
+        t1.start();
+        t2.start();
+        t3.start();
+    }
+}
