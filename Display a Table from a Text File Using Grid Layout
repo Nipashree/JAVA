@@ -1,0 +1,41 @@
+import javax . swing .*;
+ import java . awt .*;
+ import java . io .*;
+ import java . util .*;
+
+ public class TableDisplay {
+ public static void main ( String [] args ) {
+
+ JFrame frame = new JFrame (" Table Display ") ;
+frame . setDefaultCloseOperation ( JFrame . EXIT_ON_CLOSE ) ;
+ frame . setSize (500 , 300) ;
+
+ JPanel panel = new JPanel () ;
+ panel . setLayout (new GridLayout (0 , 3 , 5 , 5) ) ; // Adjust based on
+columns
+
+ try {
+BufferedReader reader = new BufferedReader (new FileReader ("
+Table .txt") ) ;
+ String line ;
+
+ while (( line = reader . readLine () ) != null ) {
+ String [] columns = line . split (",") ;
+ for ( String col : columns ) {
+ JLabel label = new JLabel ( col , SwingConstants .
+CENTER ) ;
+ label . setBorder ( BorderFactory . createLineBorder (
+Color . BLACK ) ) ;
+ panel . add ( label ) ;
+ }
+ }
+ reader . close () ;
+ } catch ( IOException e ) {
+ JOptionPane . showMessageDialog (null , " Error reading file !") ;
+ return ;
+ }
+
+ frame . add (new JScrollPane ( panel ) ) ;
+frame . setVisible ( true ) ;
+ }
+ }
