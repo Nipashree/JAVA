@@ -1,0 +1,21 @@
+public class WrapperExample {
+    public static void main(String[] args) {
+        // Primitive data type
+        int num = 10;
+
+        // Wrapping: converting primitive to object (Boxing)
+        Integer obj = Integer.valueOf(num);  // Explicit boxing
+        // OR
+        Integer autoObj = num;  // Auto-boxing
+
+        // Unwrapping: converting object to primitive (Unboxing)
+        int unboxedNum = obj.intValue();  // Explicit unboxing
+        // OR
+        int autoUnboxedNum = obj;  // Auto-unboxing
+
+        System.out.println("Primitive: " + num);
+        System.out.println("Wrapper Object: " + obj);
+        System.out.println("Unboxed Value: " + unboxedNum);
+        System.out.println("Auto-unboxed Value: " + autoUnboxedNum);
+    }
+}
