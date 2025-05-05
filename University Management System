@@ -1,0 +1,125 @@
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.*;
+
+public class UniversityManagementSystem extends JFrame {
+    // Models for tables
+    private DefaultTableModel studentModel;
+    private DefaultTableModel courseModel;
+
+    public UniversityManagementSystem() {
+        setTitle("University Management System");
+        setSize(700, 500);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        // Tabbed pane
+        JTabbedPane tabs = new JTabbedPane();
+
+        // Tabs
+        tabs.add("Students", createStudentPanel());
+        tabs.add("Courses", createCoursePanel());
+
+        add(tabs);
+        setVisible(true);
+    }
+
+    private JPanel createStudentPanel() {
+        JPanel panel = new JPanel(new BorderLayout());
+
+        JPanel form = new JPanel(new GridLayout(4, 2, 10, 10));
+        JTextField idField = new JTextField();
+        JTextField nameField = new JTextField();
+        JTextField deptField = new JTextField();
+
+        form.add(new JLabel("Student ID:"));
+        form.add(idField);
+
+        form.add(new JLabel("Name:"));
+        form.add(nameField);
+
+        form.add(new JLabel("Department:"));
+        form.add(deptField);
+
+        JButton addButton = new JButton("Add Student");
+        form.add(addButton);
+
+        panel.add(form, BorderLayout.NORTH);
+
+        // Table
+        String[] columns = {"ID", "Name", "Department"};
+        studentModel = new DefaultTableModel(columns, 0);
+        JTable table = new JTable(studentModel);
+        panel.add(new JScrollPane(table), BorderLayout.CENTER);
+
+        addButton.addActionListener(e -> {
+            String id = idField.getText().trim();
+            String name = nameField.getText().trim();
+            String dept = deptField.getText().trim();
+
+            if (id.isEmpty() || name.isEmpty() || dept.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Fill all student fields.");
+                return;
+            }
+
+            studentModel.addRow(new Object[]{id, name, dept});
+            idField.setText("");
+            nameField.setText("");
+            deptField.setText("");
+        });
+
+        return panel;
+    }
+
+    private JPanel createCoursePanel() {
+        JPanel panel = new JPanel(new BorderLayout());
+
+        JPanel form = new JPanel(new GridLayout(4, 2, 10, 10));
+        JTextField codeField = new JTextField();
+        JTextField titleField = new JTextField();
+        JTextField creditField = new JTextField();
+
+        form.add(new JLabel("Course Code:"));
+        form.add(codeField);
+
+        form.add(new JLabel("Title:"));
+        form.add(titleField);
+
+        form.add(new JLabel("Credits:"));
+        form.add(creditField);
+
+        JButton addButton = new JButton("Add Course");
+        form.add(addButton);
+
+        panel.add(form, BorderLayout.NORTH);
+
+        // Table
+        String[] columns = {"Code", "Title", "Credits"};
+        courseModel = new DefaultTableModel(columns, 0);
+        JTable table = new JTable(courseModel);
+        panel.add(new JScrollPane(table), BorderLayout.CENTER);
+
+        addButton.addActionListener(e -> {
+            String code = codeField.getText().trim();
+            String title = titleField.getText().trim();
+            String credit = creditField.getText().trim();
+
+            if (code.isEmpty() || title.isEmpty() || credit.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Fill all course fields.");
+                return;
+            }
+
+            courseModel.addRow(new Object[]{code, title, credit});
+            codeField.setText("");
+            titleField.setText("");
+            creditField.setText("");
+        });
+
+        return panel;
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(UniversityManagementSystem::new);
+    }
+}
